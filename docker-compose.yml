@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./101460488_comp3123_assgnment2_backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      MONGO_URI: mongodb://mongodb:27017/comp3123_assignment1
+      PORT: 3000
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+
+  react:
+    image: nginx:alpine
+    container_name: react-app
+    volumes:
+      - ./101460488_comp3123_assignment2_react/build:/usr/share/nginx/html
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
